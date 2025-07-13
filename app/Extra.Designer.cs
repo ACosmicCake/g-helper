@@ -1201,6 +1201,8 @@ namespace GHelper
             panelSettings.Controls.Add(checkOptimalBrightness);
             panelSettings.Controls.Add(checkStatusLed);
             panelSettings.Controls.Add(checkPerKeyRGB);
+            panelSettings.Controls.Add(checkPerf);
+            panelSettings.Controls.Add(numericPerf);
             panelSettings.Dock = DockStyle.Top;
             panelSettings.Location = new Point(13, 1081);
             panelSettings.Name = "panelSettings";
@@ -1352,6 +1354,34 @@ namespace GHelper
             checkPerKeyRGB.UseVisualStyleBackColor = true;
             checkPerKeyRGB.Visible = false;
             // 
+            // checkPerf
+            //
+            checkPerf.AutoSize = true;
+            checkPerf.Dock = DockStyle.Top;
+            checkPerf.Location = new Point(18, 484);
+            checkPerf.Margin = new Padding(4, 3, 4, 3);
+            checkPerf.Name = "checkPerf";
+            checkPerf.Padding = new Padding(3);
+            checkPerf.Size = new Size(802, 40);
+            checkPerf.TabIndex = 15;
+            checkPerf.Text = "Reset Performance Mode Nonstop";
+            checkPerf.UseVisualStyleBackColor = true;
+            checkPerf.Visible = true;
+            //
+            // numericPerf
+            //
+            numericPerf.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            numericPerf.Location = new Point(690, 484);
+            numericPerf.Margin = new Padding(4, 3, 4, 3);
+            numericPerf.Maximum = new decimal(new int[] { 3600, 0, 0, 0 });
+            numericPerf.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+            numericPerf.Name = "numericPerf";
+            numericPerf.Size = new Size(122, 35);
+            numericPerf.TabIndex = 16;
+            numericPerf.Unit = "sec";
+            numericPerf.UnitFirst = false;
+            numericPerf.Value = new decimal(new int[] { 3, 0, 0, 0 });
+            //
             // panelPower
             // 
             panelPower.Controls.Add(numericHibernateAfter);
@@ -1810,5 +1840,7 @@ namespace GHelper
         private CheckBox checkBatteryLid;
         private CheckBox checkBatteryBar;
         private CheckBox checkOptimalBrightness;
+        private CheckBox checkPerf;
+        private NumericUpDownWithUnit numericPerf;
     }
 }

@@ -20,6 +20,7 @@ namespace GHelper.Mode
 
         static System.Timers.Timer reapplyTimer = default!;
         static System.Timers.Timer modeToggleTimer = default!;
+        static System.Timers.Timer perfTimer = default!;
 
         public ModeControl()
         {
@@ -469,5 +470,28 @@ namespace GHelper.Mode
             else ResetRyzen();
         }
 
+        public void PerformanceTimer(bool status, int seconds = 3)
+        {
+            if (perfTimer is null)
+            {
+                perfTimer = new System.Timers.Timer(seconds * 1000);
+                perfTimer.Elapsed += PerfTimer_Elapsed;
+            }
+
+            perfTimer.Enabled = status;
+
+            if (!status)
+            {
+                perfTimer.Stop();
+                perfTimer.Dispose();
+                perfTimer = null;
+            }
+
+        }
+
+        private void PerfTimer_Elapsed(object? sender, System.Timers.ElapsedEventArgs e)
+        {
+            ResetPerformanceMode();
+        }
     }
 }

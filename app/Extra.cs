@@ -478,6 +478,26 @@ namespace GHelper
 
             InitACPITesting();
 
+            checkPerf.Checked = AppConfig.Is("perf_mode");
+            checkPerf.CheckedChanged += CheckPerf_CheckedChanged;
+
+            numericPerf.Value = AppConfig.Get("perf_mode_time", 3);
+            numericPerf.ValueChanged += NumericPerf_ValueChanged;
+
+            Program.modeControl.PerformanceTimer(checkPerf.Checked, (int)numericPerf.Value);
+
+        }
+
+        private void CheckPerf_CheckedChanged(object? sender, EventArgs e)
+        {
+            AppConfig.Set("perf_mode", (checkPerf.Checked ? 1 : 0));
+            Program.modeControl.PerformanceTimer(checkPerf.Checked, (int)numericPerf.Value);
+        }
+
+        private void NumericPerf_ValueChanged(object? sender, EventArgs e)
+        {
+            AppConfig.Set("perf_mode_time", (int)numericPerf.Value);
+            Program.modeControl.PerformanceTimer(checkPerf.Checked, (int)numericPerf.Value);
         }
 
         private void CheckOptimalBrightness_CheckedChanged(object? sender, EventArgs e)
