@@ -19,6 +19,7 @@ namespace GHelper
             if (disposing && (components != null))
             {
                 components.Dispose();
+                performanceModeResetTimer.Dispose(); // Add this line
             }
             base.Dispose(disposing);
         }
@@ -1189,6 +1190,8 @@ namespace GHelper
             panelSettings.AccessibleRole = AccessibleRole.Grouping;
             panelSettings.AutoSize = true;
             panelSettings.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            panelSettings.Controls.Add(this.checkPerformanceModeReset);
+            panelSettings.Controls.Add(this.numericPerformanceModeReset);
             panelSettings.Controls.Add(checkAutoToggleClamshellMode);
             panelSettings.Controls.Add(checkBWIcon);
             panelSettings.Controls.Add(checkTopmost);
@@ -1214,12 +1217,48 @@ namespace GHelper
             checkAutoToggleClamshellMode.Dock = DockStyle.Top;
             checkAutoToggleClamshellMode.Location = new Point(18, 444);
             checkAutoToggleClamshellMode.Name = "checkAutoToggleClamshellMode";
-            checkAutoToggleClamshellMode.Padding = new Padding(3);
+            checkAutoToggleClamshellsMode.Padding = new Padding(3);
             checkAutoToggleClamshellMode.Size = new Size(802, 40);
             checkAutoToggleClamshellMode.TabIndex = 8;
             checkAutoToggleClamshellMode.Text = "Auto Toggle Clamshell Mode";
             checkAutoToggleClamshellMode.UseVisualStyleBackColor = true;
             // 
+            // checkPerformanceModeReset
+            //
+            this.checkPerformanceModeReset.AutoSize = true;
+            this.checkPerformanceModeReset.Dock = System.Windows.Forms.DockStyle.Top;
+            this.checkPerformanceModeReset.Location = new System.Drawing.Point(18, 484);
+            this.checkPerformanceModeReset.Name = "checkPerformanceModeReset";
+            this.checkPerformanceModeReset.Padding = new System.Windows.Forms.Padding(3);
+            this.checkPerformanceModeReset.Size = new System.Drawing.Size(802, 40);
+            this.checkPerformanceModeReset.TabIndex = 14;
+            this.checkPerformanceModeReset.Text = "Continuously Reset Performance Mode";
+            this.checkPerformanceModeReset.UseVisualStyleBackColor = true;
+            //
+            // numericPerformanceModeReset
+            //
+            this.numericPerformanceModeReset.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.numericPerformanceModeReset.Location = new System.Drawing.Point(690, 485);
+            this.numericPerformanceModeReset.Maximum = new decimal(new int[] {
+            3600,
+            0,
+            0,
+            0});
+            this.numericPerformanceModeReset.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numericPerformanceModeReset.Name = "numericPerformanceModeReset";
+            this.numericPerformanceModeReset.Size = new System.Drawing.Size(122, 35);
+            this.numericPerformanceModeReset.TabIndex = 15;
+            this.numericPerformanceModeReset.Unit = "sec";
+            this.numericPerformanceModeReset.Value = new decimal(new int[] {
+            3,
+            0,
+            0,
+            0});
+            //
             // checkBWIcon
             // 
             checkBWIcon.AutoSize = true;
@@ -1810,5 +1849,7 @@ namespace GHelper
         private CheckBox checkBatteryLid;
         private CheckBox checkBatteryBar;
         private CheckBox checkOptimalBrightness;
+        private CheckBox checkPerformanceModeReset;
+        private UI.NumericUpDownWithUnit numericPerformanceModeReset;
     }
 }

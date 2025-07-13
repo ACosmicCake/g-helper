@@ -13,6 +13,7 @@ namespace GHelper
     {
 
         ClamshellModeControl clamshellControl = new ClamshellModeControl();
+        private System.Windows.Forms.Timer performanceModeResetTimer = new();
 
         const string EMPTY = "--------------";
 
@@ -471,6 +472,20 @@ namespace GHelper
 
             toolTip.SetToolTip(checkAutoToggleClamshellMode, "Disable sleep on lid close when plugged in and external monitor is connected");
 
+            // Performance Mode Reset Timer
+            checkPerformanceModeReset.Checked = AppConfig.Is("performance_mode_reset");
+            numericPerformanceModeReset.Value = AppConfig.Get("performance_mode_reset_interval", 3);
+
+            checkPerformanceModeReset.CheckedChanged += CheckPerformanceModeReset_CheckedChanged;
+            numericPerformanceModeReset.ValueChanged += NumericPerformanceModeReset_ValueChanged;
+
+            performanceModeResetTimer.Tick += PerformanceModeResetTimer_Tick;
+
+            if (checkPerformanceModeReset.Checked)
+            {
+                StartPerformanceModeResetTimer();
+            }
+
             InitCores();
             InitVariBright();
             InitServices();
@@ -880,6 +895,40 @@ namespace GHelper
                 ClamshellModeControl.DisableClamshellMode();
             }
 
+        }
+
+        private void CheckPerformanceModeReset_CheckedChanged(object? sender, EventArgs e)
+        {
+            AppConfig.Set("performance_mode_reset", checkPerformanceModeReset.Checked ? 1 : 0);
+            if (checkPerformanceModeReset.Checked)
+            {
+                StartPerformanceModeResetTimer();
+            }
+            else
+            {
+                performanceModeResetTimer.Stop();
+            }
+        }
+
+        private void NumericPerformanceModeReset_ValueChanged(object? sender, EventArgs e)
+        {
+            AppConfig.Set("performance_mode_reset_interval", (int)numericPerformanceModeReset.Value);
+            if (checkPerformanceModeReset.Checked)
+            {
+                StartPerformanceModeResetTimer();
+            }
+        }
+
+        private void PerformanceModeResetTimer_Tick(object? sender, EventArgs e)
+        {
+            Program.modeControl.ResetPerformanceMode();
+        }
+
+        private void StartPerformanceModeResetTimer()
+        {
+            performanceModeResetTimer.Stop();
+            performanceModeResetTimer.Interval = (int)numericPerformanceModeReset.Value * 1000;
+            performanceModeResetTimer.Start();
         }
 
         private void panelAPU_Paint(object sender, PaintEventArgs e)
