@@ -30,9 +30,9 @@ namespace GHelper
 
         public static SettingsForm settingsForm = new SettingsForm();
 
-        public static ModeControl modeControl = new ModeControl();
+        public static ModeControl modeControl;
         public static GPUModeControl gpuControl = new GPUModeControl(settingsForm);
-        public static AllyControl allyControl = new AllyControl(settingsForm);
+        public static AllyControl allyControl;
         public static ClamshellModeControl clamshellControl = new ClamshellModeControl();
 
         public static ToastForm toast = new ToastForm();
@@ -82,6 +82,9 @@ namespace GHelper
             Logger.WriteLine("Start Count: " + startCount);
 
             acpi = new AsusACPI();
+
+            modeControl = new ModeControl(settingsForm.fansForm);
+            allyControl = new AllyControl(settingsForm, modeControl);
 
             if (!acpi.IsConnected() && AppConfig.IsASUS())
             {

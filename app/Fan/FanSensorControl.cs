@@ -14,7 +14,7 @@ namespace GHelper.Fan
         const int FAN_COUNT = 3;
 
         Fans fansForm;
-        ModeControl modeControl = Program.modeControl;
+        ModeControl modeControl;
 
         static int[] measuredMax;
         static int sameCount = 0;
@@ -24,9 +24,10 @@ namespace GHelper.Fan
         static int[] _fanMax = InitFanMax();
         static bool _fanRpm = AppConfig.IsNotFalse("fan_rpm");
 
-        public FanSensorControl(Fans fansForm)
+        public FanSensorControl(Fans fansForm, ModeControl modeControl)
         {
             this.fansForm = fansForm;
+            this.modeControl = modeControl;
             timer = new System.Timers.Timer(1000);
             timer.Elapsed += Timer_Elapsed;
         }

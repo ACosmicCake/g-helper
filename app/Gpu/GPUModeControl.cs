@@ -10,14 +10,16 @@ namespace GHelper.Gpu
     public class GPUModeControl
     {
         SettingsForm settings;
+        ModeControl modeControl;
 
         public static int gpuMode;
         public static bool? gpuExists = null;
 
 
-        public GPUModeControl(SettingsForm settingsForm)
+        public GPUModeControl(SettingsForm settingsForm, ModeControl modeControl)
         {
             settings = settingsForm;
+            this.modeControl = modeControl;
         }
 
         public void InitGPUMode()

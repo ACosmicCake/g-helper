@@ -21,11 +21,14 @@ namespace GHelper.Mode
         static System.Timers.Timer reapplyTimer = default!;
         static System.Timers.Timer modeToggleTimer = default!;
 
-        public ModeControl()
+        Fans fansForm;
+
+        public ModeControl(Fans fans)
         {
             reapplyTimer = new System.Timers.Timer(AppConfig.GetMode("reapply_time", 30) * 1000);
             reapplyTimer.Enabled = false;
             reapplyTimer.Elapsed += ReapplyTimer_Elapsed;
+            fansForm = fans;
         }
 
 

@@ -27,19 +27,24 @@ namespace GHelper
         const int fansMax = 100;
 
         NvidiaGpuControl? nvControl = null;
-        ModeControl modeControl = Program.modeControl;
+        ModeControl modeControl;
 
         FanSensorControl fanSensorControl;
 
         static int gpuPowerBase = 0;
         static bool isGPUPower => gpuPowerBase > 0;
 
+        private System.Timers.Timer autoResetTimer;
+
         public Fans()
         {
+            autoResetTimer = new System.Timers.Timer(3000); // 3 seconds
+            autoResetTimer.Elapsed += AutoResetTimer_Elapsed;
 
             InitializeComponent();
 
-            fanSensorControl = new FanSensorControl(this);
+            modeControl = new ModeControl(this);
+            fanSensorControl = new FanSensorControl(this, modeControl);
 
             //float dpi = ControlHelper.GetDpiScale(this).Value;
             //comboModes.Size = new Size(comboModes.Width, (int)dpi * 18);
@@ -206,6 +211,7 @@ namespace GHelper
             buttonAdd.Click += ButtonAdd_Click;
             buttonRemove.Click += ButtonRemove_Click;
             buttonRename.Click += ButtonRename_Click;
+            buttonAutoReset.Click += ButtonAutoReset_Click;
 
 
             trackUV.Scroll += TrackUV_Scroll;
@@ -504,6 +510,26 @@ namespace GHelper
             int mode = Modes.Add();
             FillModes();
             modeControl.SetPerformanceMode(mode);
+        }
+
+        private void CreateAutoResetProfile()
+        {
+            // Add a new custom profile and get its ID
+            int autoResetProfileId = Modes.Add();
+            if (autoResetProfileId != -1)
+            {
+                // Optionally, you can give it a custom name
+                AppConfig.SetMode("mode_name_" + autoResetProfileId, "Auto Reset");
+
+                // Switch to the new profile
+                modeControl.SetPerformanceMode(autoResetProfileId, true);
+            }
+        }
+
+        private void ButtonAutoReset_Click(object sender, EventArgs e)
+        {
+            CreateAutoResetProfile();
+            autoResetTimer.Start();
         }
 
         public void InitMode()
@@ -1124,7 +1150,7 @@ namespace GHelper
 
         private void ButtonReset_Click(object? sender, EventArgs e)
         {
-
+            autoResetTimer.Stop();
             LoadProfile(seriesCPU, AsusFan.CPU, true);
             LoadProfile(seriesGPU, AsusFan.GPU, true);
 
@@ -1372,6 +1398,20 @@ namespace GHelper
             }
         }
 
+        private void AutoResetTimer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            // Check if the auto-reset profile is active
+            if (Modes.GetCurrentName() == "Auto Reset")
+            {
+                // Call the factory default action
+                modeControl.ResetPerformanceMode();
+            }
+        }
+
+        public void StopAutoResetTimer()
+        {
+            autoResetTimer.Stop();
+        }
     }
 
 }

@@ -337,15 +337,17 @@ namespace GHelper
             // 
             // tableLayoutModes
             // 
-            tableLayoutModes.ColumnCount = 4;
+            tableLayoutModes.ColumnCount = 5;
             tableLayoutModes.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 60F));
             tableLayoutModes.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 60F));
             tableLayoutModes.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            tableLayoutModes.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 60F));
             tableLayoutModes.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 60F));
             tableLayoutModes.Controls.Add(buttonRemove, 0, 0);
             tableLayoutModes.Controls.Add(buttonAdd, 3, 0);
             tableLayoutModes.Controls.Add(buttonRename, 1, 0);
             tableLayoutModes.Controls.Add(comboModes, 2, 0);
+            tableLayoutModes.Controls.Add(buttonAutoReset, 4, 0);
             tableLayoutModes.Dock = DockStyle.Right;
             tableLayoutModes.Location = new Point(330, 0);
             tableLayoutModes.Margin = new Padding(0);
@@ -1704,6 +1706,14 @@ namespace GHelper
             buttonCPU.TextImageRelation = TextImageRelation.ImageBeforeText;
             buttonCPU.UseVisualStyleBackColor = false;
             // 
+            // buttonAutoReset
+            //
+            this.buttonAutoReset = new GHelper.UI.RButton();
+            this.buttonAutoReset.Name = "buttonAutoReset";
+            this.buttonAutoReset.Text = "Auto Reset Profile";
+            this.buttonAutoReset.Secondary = true;
+            this.buttonAutoReset.UseVisualStyleBackColor = false;
+            //
             // Fans
             // 
             AutoScaleDimensions = new SizeF(192F, 192F);
@@ -1872,6 +1882,7 @@ namespace GHelper
         private RButton buttonAdd;
         private RButton buttonRemove;
         private RButton buttonRename;
+        private RButton buttonAutoReset;
         private Panel panelUV;
         private Label labelUV;
         private Label labelLeftUV;

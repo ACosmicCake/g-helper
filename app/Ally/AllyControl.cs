@@ -39,6 +39,7 @@ namespace GHelper.Ally
         static AmdGpuControl amdControl = new AmdGpuControl();
 
         SettingsForm settings;
+        ModeControl modeControl;
 
         static ControllerMode _mode = ControllerMode.Auto;
         static ControllerMode _applyMode = ControllerMode.Mouse;
@@ -295,10 +296,11 @@ namespace GHelper.Ally
 
         };
 
-        public AllyControl(SettingsForm settingsForm)
+        public AllyControl(SettingsForm settingsForm, ModeControl modeControl)
         {
             if (!AppConfig.IsAlly()) return;
             settings = settingsForm;
+            this.modeControl = modeControl;
 
             if (timer is null)
             {
@@ -405,7 +407,7 @@ namespace GHelper.Ally
 
             if (!autoTDP)
             {
-                Program.modeControl.SetPerformanceMode();
+                modeControl.SetPerformanceMode();
             }
 
             settings.VisualiseAutoTDP(autoTDP);
