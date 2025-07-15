@@ -469,6 +469,12 @@ namespace GHelper
             checkPerKeyRGB.Checked = AppConfig.Is("per_key_rgb");
             checkPerKeyRGB.CheckedChanged += CheckPerKeyRGB_CheckedChanged;
 
+            checkResetPerformance.Checked = AppConfig.Is("reset_performance_mode");
+            checkResetPerformance.CheckedChanged += checkResetPerformance_CheckedChanged;
+
+            numericResetPerformance.Value = AppConfig.Get("reset_performance_mode_seconds", 3);
+            numericResetPerformance.ValueChanged += numericResetPerformance_ValueChanged;
+
             toolTip.SetToolTip(checkAutoToggleClamshellMode, "Disable sleep on lid close when plugged in and external monitor is connected");
 
             InitCores();
@@ -488,6 +494,18 @@ namespace GHelper
         private void CheckPerKeyRGB_CheckedChanged(object? sender, EventArgs e)
         {
             AppConfig.Set("per_key_rgb", (checkPerKeyRGB.Checked ? 1 : 0));
+        }
+
+        private void checkResetPerformance_CheckedChanged(object? sender, EventArgs e)
+        {
+            AppConfig.Set("reset_performance_mode", (checkResetPerformance.Checked ? 1 : 0));
+            Program.modeControl.SetPerformanceMode();
+        }
+
+        private void numericResetPerformance_ValueChanged(object? sender, EventArgs e)
+        {
+            AppConfig.Set("reset_performance_mode_seconds", (int)numericResetPerformance.Value);
+            Program.modeControl.SetPerformanceMode();
         }
 
         private void CheckLEDStatus_CheckedChanged(object? sender, EventArgs e)

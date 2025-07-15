@@ -20,12 +20,17 @@ namespace GHelper.Mode
 
         static System.Timers.Timer reapplyTimer = default!;
         static System.Timers.Timer modeToggleTimer = default!;
+        static System.Timers.Timer resetTimer = default!;
 
         public ModeControl()
         {
             reapplyTimer = new System.Timers.Timer(AppConfig.GetMode("reapply_time", 30) * 1000);
             reapplyTimer.Enabled = false;
             reapplyTimer.Elapsed += ReapplyTimer_Elapsed;
+
+            resetTimer = new System.Timers.Timer(AppConfig.Get("reset_performance_mode_seconds", 3) * 1000);
+            resetTimer.Enabled = false;
+            resetTimer.Elapsed += ResetTimer_Elapsed;
         }
 
 
@@ -33,6 +38,11 @@ namespace GHelper.Mode
         {
             SetCPUTemp(AppConfig.GetMode("cpu_temp"));
             SetRyzenPower();
+        }
+
+        private void ResetTimer_Elapsed(object? sender, System.Timers.ElapsedEventArgs e)
+        {
+            ResetPerformanceMode();
         }
 
         public void AutoPerformance(bool powerChanged = false)
@@ -125,6 +135,9 @@ namespace GHelper.Mode
             // CPU Boost setting override
             if (AppConfig.GetMode("auto_boost") != -1)
                     PowerNative.SetCPUBoost(AppConfig.GetMode("auto_boost"));
+
+            resetTimer.Interval = AppConfig.Get("reset_performance_mode_seconds", 3) * 1000;
+            resetTimer.Enabled = AppConfig.Is("reset_performance_mode");
 
             settings.FansInit();
         }

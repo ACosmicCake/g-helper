@@ -122,6 +122,8 @@ namespace GHelper
             checkGPUFix = new CheckBox();
             checkStatusLed = new CheckBox();
             checkPerKeyRGB = new CheckBox();
+            checkResetPerformance = new CheckBox();
+            numericResetPerformance = new NumericUpDownWithUnit();
             panelPower = new Panel();
             numericHibernateAfter = new NumericUpDownWithUnit();
             labelHibernateAfter = new Label();
@@ -1201,6 +1203,8 @@ namespace GHelper
             panelSettings.Controls.Add(checkOptimalBrightness);
             panelSettings.Controls.Add(checkStatusLed);
             panelSettings.Controls.Add(checkPerKeyRGB);
+            panelSettings.Controls.Add(checkResetPerformance);
+            panelSettings.Controls.Add(numericResetPerformance);
             panelSettings.Dock = DockStyle.Top;
             panelSettings.Location = new Point(13, 1081);
             panelSettings.Name = "panelSettings";
@@ -1351,6 +1355,33 @@ namespace GHelper
             checkPerKeyRGB.Text = "Per-Key RGB Keyboard";
             checkPerKeyRGB.UseVisualStyleBackColor = true;
             checkPerKeyRGB.Visible = false;
+            // 
+            // checkResetPerformance
+            // 
+            checkResetPerformance.AutoSize = true;
+            checkResetPerformance.Dock = DockStyle.Top;
+            checkResetPerformance.Location = new Point(18, 484);
+            checkResetPerformance.Margin = new Padding(4, 3, 4, 3);
+            checkResetPerformance.Name = "checkResetPerformance";
+            checkResetPerformance.Padding = new Padding(3);
+            checkResetPerformance.Size = new Size(802, 40);
+            checkResetPerformance.TabIndex = 15;
+            checkResetPerformance.Text = "Reset Performance Mode every X seconds";
+            checkResetPerformance.UseVisualStyleBackColor = true;
+            // 
+            // numericResetPerformance
+            // 
+            numericResetPerformance.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            numericResetPerformance.Location = new Point(690, 487);
+            numericResetPerformance.Margin = new Padding(4, 3, 4, 3);
+            numericResetPerformance.Maximum = new decimal(new int[] { 3600, 0, 0, 0 });
+            numericResetPerformance.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+            numericResetPerformance.Name = "numericResetPerformance";
+            numericResetPerformance.Size = new Size(122, 35);
+            numericResetPerformance.TabIndex = 16;
+            numericResetPerformance.Unit = "sec";
+            numericResetPerformance.UnitFirst = false;
+            numericResetPerformance.Value = new decimal(new int[] { 3, 0, 0, 0 });
             // 
             // panelPower
             // 
@@ -1810,5 +1841,7 @@ namespace GHelper
         private CheckBox checkBatteryLid;
         private CheckBox checkBatteryBar;
         private CheckBox checkOptimalBrightness;
+        private CheckBox checkResetPerformance;
+        private NumericUpDownWithUnit numericResetPerformance;
     }
 }

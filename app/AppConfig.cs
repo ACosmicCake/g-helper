@@ -181,6 +181,8 @@ public static class AppConfig
     {
         config = new Dictionary<string, object>();
         config["performance_mode"] = 0;
+        config["reset_performance_mode"] = 0;
+        config["reset_performance_mode_seconds"] = 3;
         string jsonString = JsonSerializer.Serialize(config);
         File.WriteAllText(configFile, jsonString);
     }
